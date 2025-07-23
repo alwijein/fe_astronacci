@@ -15,7 +15,7 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
-        backgroundColor: CommonColors.primaryBlue,
+        backgroundColor: CommonColors.primaryRed,
         foregroundColor: CommonColors.white,
         title: const Text('Profile'),
       ),
@@ -43,8 +43,8 @@ class DetailPage extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            CommonColors.primaryBlue,
-            CommonColors.primaryBlue.withOpacity(0.7),
+            CommonColors.primaryRed,
+            CommonColors.primaryRed.withOpacity(0.7),
           ],
         ),
         borderRadius: const BorderRadius.only(
@@ -73,7 +73,7 @@ class DetailPage extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: 60,
-                backgroundColor: CommonColors.softBlue,
+                backgroundColor: CommonColors.softRed,
                 backgroundImage: NetworkImage(user.avatar ??
                     'https://testing.sulapaeppastudio.com/public/default_avatar.png'),
               ),
@@ -143,10 +143,10 @@ class DetailPage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: CommonColors.primaryBlue.withOpacity(0.1),
+            color: CommonColors.primaryRed.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: CommonColors.primaryBlue, size: 24),
+          child: Icon(icon, color: CommonColors.primaryRed, size: 24),
         ),
         const SizedBox(width: 16),
         Expanded(
@@ -182,12 +182,12 @@ class DetailPage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: CommonColors.primaryBlue.withOpacity(0.1),
+            color: CommonColors.primaryRed.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.email_outlined,
-            color: CommonColors.primaryBlue,
+            color: CommonColors.primaryRed,
             size: 24,
           ),
         ),
@@ -208,7 +208,7 @@ class DetailPage extends StatelessWidget {
               Text(
                 user.email,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: CommonColors.primaryBlue,
+                      color: CommonColors.primaryRed,
                       fontWeight: FontWeight.w600,
                     ),
               ),

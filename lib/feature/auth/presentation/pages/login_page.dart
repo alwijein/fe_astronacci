@@ -1,14 +1,15 @@
+import 'package:fe_astronacci/feature/auth/presentation/cubits/register_cubit.dart';
+import 'package:fe_astronacci/feature/auth/presentation/pages/register_page.dart';
 import 'package:fe_astronacci/feature/home/presentation/cubits/navbar_cubit.dart';
 import 'package:fe_astronacci/feature/home/presentation/pages/navbar_page.dart';
+import 'package:fe_astronacci/feature/auth/presentation/cubits/forgot_password_cubit.dart';
+import 'package:fe_astronacci/feature/auth/presentation/pages/forgot_password_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fe_astronacci/common/utils/assets/common_images.dart';
 import 'package:fe_astronacci/common/utils/color/common_colors.dart';
-import 'package:fe_astronacci/feature/home/di/home_di.dart';
-import 'package:fe_astronacci/feature/home/presentation/cubits/home_cubit.dart';
-import 'package:fe_astronacci/feature/home/presentation/pages/home_page.dart';
-import 'package:fe_astronacci/feature/login/presentation/cubits/login_cubit.dart';
+import 'package:fe_astronacci/feature/auth/presentation/cubits/login_cubit.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/login';
@@ -56,13 +57,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             SizedBox(height: constraints.maxHeight * 0.1),
-            SvgPicture.asset(CommonImages.logo, width: 300),
+            Image.asset(CommonImages.logo, width: 300),
             SizedBox(height: constraints.maxHeight * 0.1),
             Text(
               "Sign In",
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: CommonColors.primaryBlue,
+                    color: CommonColors.primaryRed,
                   ),
             ),
             SizedBox(height: constraints.maxHeight * 0.05),
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: CommonColors.primaryBlue,
+        backgroundColor: CommonColors.primaryRed,
         foregroundColor: CommonColors.white,
         minimumSize: const Size(double.infinity, 48),
         shape: const StadiumBorder(),
@@ -147,7 +148,16 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildForgotPassword() {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => BlocProvider<ForgotPasswordCubit>(
+              create: (_) => sl<ForgotPasswordCubit>(),
+              child: const ForgotPasswordForm(),
+            ),
+          ),
+        );
+      },
       child: const Text(
         'Forgot Password?',
         style: TextStyle(color: CommonColors.grayText),
@@ -157,14 +167,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSignUpText() {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => BlocProvider<RegisterCubit>(
+              create: (_) => sl<RegisterCubit>(),
+              child: const RegisterPage(),
+            ),
+          ),
+        );
+      },
       child: const Text.rich(
         TextSpan(
           text: "Don't have an account? ",
           children: [
             TextSpan(
               text: "Sign Up",
-              style: TextStyle(color: CommonColors.primaryBlue),
+              style: TextStyle(color: CommonColors.primaryRed),
             ),
           ],
         ),

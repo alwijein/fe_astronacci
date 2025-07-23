@@ -6,12 +6,19 @@ class HomeInitial extends HomeState {}
 
 class HomeLoading extends HomeState {}
 
+class HomeSearching extends HomeState {}
+
 class HomeLoaded extends HomeState {
   final List<UserEntity> users;
   final bool hasMore;
   final bool isLoadingMore;
 
   HomeLoaded(this.users, this.hasMore, {this.isLoadingMore = false});
+}
+
+class HomeSearchResult extends HomeState {
+  final List<UserEntity> users;
+  HomeSearchResult(this.users);
 }
 
 class HomeError extends HomeState {

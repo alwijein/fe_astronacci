@@ -13,10 +13,12 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this.remote);
 
   @override
-  Future<Either<ErrorDto, List<UserEntity>>> getUsers({int page = 1}) {
+  Future<Either<ErrorDto, List<UserEntity>>> getUsers(
+      {int page = 1, String? search // Tambahkan parameter ini
+      }) {
     return FutureUtil.callOrError(
       () async {
-        final models = await remote.fetchUsers(page: page);
+        final models = await remote.fetchUsers(page: page, search: search);
         return models
             .map((m) => UserEntity(
                   id: m.id,

@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fe_astronacci/common/utils/color/common_colors.dart';
-import 'package:fe_astronacci/feature/login/presentation/pages/login_page.dart';
+import 'package:fe_astronacci/common/utils/local_storage/common_shared_preferences.dart';
+import 'package:fe_astronacci/feature/auth/presentation/cubits/login_cubit.dart';
+import 'package:fe_astronacci/feature/auth/presentation/pages/login_page.dart';
+import 'package:fe_astronacci/feature/profile/di/profile_di.dart';
 import 'package:fe_astronacci/feature/profile/presentation/pages/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fe_astronacci/feature/profile/presentation/cubits/profile_cubit.dart';
 import 'package:fe_astronacci/feature/profile/domain/entities/profile_entity.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   static const routeName = '/profile';
@@ -20,28 +22,19 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: CommonColors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: CommonColors.primaryBlue,
+          backgroundColor: CommonColors.primaryRed,
           foregroundColor: CommonColors.white,
           title: const Text('Profile'),
         ),
-        body: BlocListener<ProfileCubit, ProfileState>(
-          listener: (context, state) {
-            if (state.maybeWhen(
-                logoutSuccess: () => true, orElse: () => false)) {
-              Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
-            }
+        body: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () => const SizedBox.shrink(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              loaded: (user) => _buildContent(context, user),
+              error: (message) => Center(child: Text(message)),
+            );
           },
-          child: BlocBuilder<ProfileCubit, ProfileState>(
-            builder: (context, state) {
-              return state.when(
-                initial: () => const SizedBox.shrink(),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                loaded: (user) => _buildContent(context, user),
-                error: (message) => Center(child: Text(message)),
-                logoutSuccess: () => const SizedBox.shrink(),
-              );
-            },
-          ),
         ),
       ),
     );
@@ -57,7 +50,7 @@ class ProfilePage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: CommonColors.softBlue, width: 2),
+              border: Border.all(color: CommonColors.softRed, width: 2),
             ),
             padding: const EdgeInsets.all(4),
             child: ClipOval(
@@ -70,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                       placeholder: (context, url) => Container(
                         width: 120,
                         height: 120,
-                        color: CommonColors.softBlue,
+                        color: CommonColors.softRed,
                         child: const Center(child: CircularProgressIndicator()),
                       ),
                       errorWidget: (context, url, error) => Container(
@@ -87,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                   : Container(
                       width: 120,
                       height: 120,
-                      color: CommonColors.softBlue,
+                      color: CommonColors.softRed,
                       child: const Icon(Icons.person,
                           size: 60, color: Colors.white),
                     ),
@@ -126,7 +119,7 @@ class ProfilePage extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: CommonColors.primaryBlue,
+                backgroundColor: Colors.amber,
                 foregroundColor: CommonColors.white,
                 shape: const StadiumBorder(),
               ),
@@ -144,18 +137,31 @@ class ProfilePage extends StatelessWidget {
               child: const Text('Edit Profile'),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 28),
           SizedBox(
             width: double.infinity, // Membuat tombol full width
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
+                backgroundColor: CommonColors.black,
                 foregroundColor: CommonColors.white,
                 shape: const StadiumBorder(),
                 minimumSize: const Size.fromHeight(48), // Tinggi tombol
               ),
               onPressed: () {
-                context.read<ProfileCubit>().logout();
+                CommonSharedPreferences.shared
+                    .removeData(CommonSharedKey.userProfile);
+                CommonSharedPreferences.shared
+                    .removeData(CommonSharedPreferences.headerTokenKey);
+
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (ctx) => BlocProvider<LoginCubit>(
+                      create: (_) => sl<LoginCubit>(),
+                      child: const LoginPage(),
+                    ),
+                  ),
+                  (route) => false,
+                );
               },
               child: const Text('Logout'),
             ),
@@ -183,7 +189,7 @@ class _InfoRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Row(
         children: [
-          Icon(icon, color: CommonColors.primaryBlue),
+          Icon(icon, color: CommonColors.primaryRed),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

@@ -50,7 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'Crop Avatar',
-          toolbarColor: CommonColors.primaryBlue,
+          toolbarColor: CommonColors.primaryRed,
           toolbarWidgetColor: Colors.white,
         ),
         IOSUiSettings(title: 'Crop Avatar'),
@@ -84,7 +84,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         backgroundColor: CommonColors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: CommonColors.primaryBlue,
+          backgroundColor: CommonColors.primaryRed,
           foregroundColor: CommonColors.white,
           title: const Text('Edit Profile'),
         ),
@@ -94,7 +94,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               initial: () {},
               loading: () {},
               loaded: (_) => Navigator.pop(context),
-              logoutSuccess: () {},
               error: (msg) => ScaffoldMessenger.of(ctx).showSnackBar(
                 SnackBar(content: Text(msg)),
               ),
@@ -115,7 +114,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         children: [
                           CircleAvatar(
                             radius: 60,
-                            backgroundColor: CommonColors.softBlue,
+                            backgroundColor: CommonColors.softRed,
                             backgroundImage: _avatarFile != null
                                 ? FileImage(_avatarFile!)
                                 : NetworkImage(
@@ -126,7 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             onTap: _pickAndCropImage,
                             child: const CircleAvatar(
                               radius: 16,
-                              backgroundColor: CommonColors.primaryBlue,
+                              backgroundColor: CommonColors.primaryRed,
                               child: Icon(
                                 Icons.add,
                                 color: CommonColors.white,
@@ -151,7 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           onPressed: () => Navigator.pop(context),
                           style: TextButton.styleFrom(
                             foregroundColor:
-                                CommonColors.primaryBlue.withOpacity(0.6),
+                                CommonColors.primaryRed.withOpacity(0.6),
                           ),
                           child: const Text('Cancel'),
                         ),
@@ -160,7 +159,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           onPressed: state.maybeWhen(
                               loading: () => null, orElse: () => _onSave),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: CommonColors.primaryBlue,
+                            backgroundColor: CommonColors.primaryRed,
                             foregroundColor: CommonColors.white,
                             minimumSize: const Size(120, 48),
                             shape: const StadiumBorder(),

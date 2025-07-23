@@ -8,6 +8,8 @@ class GetUsersUseCase {
 
   GetUsersUseCase(this.repository);
 
-  Future<Either<ErrorDto, List<UserEntity>>> call({int page = 1}) =>
-      repository.getUsers(page: page);
+  Future<Either<ErrorDto, List<UserEntity>>> call(
+          {int page = 1, String? search // Tambahkan parameter ini
+          }) =>
+      repository.getUsers(page: page, search: search);
 }

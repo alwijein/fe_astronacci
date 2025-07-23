@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:fe_astronacci/core/domain/models/error_dto.dart';
-import 'package:fe_astronacci/feature/login/domain/entities/login_entity.dart';
 
-abstract class AuthRepository {
-  Future<Either<ErrorDto, LoginEntity>> login({
+abstract class RegisterRepository {
+  Future<Either<ErrorDto, void>> register({
+    required String name,
     required String email,
     required String password,
+    String? phone,
   });
 }

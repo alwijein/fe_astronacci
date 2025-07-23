@@ -68,8 +68,8 @@ class NavbarPage extends StatelessWidget {
     required String label,
   }) {
     return BottomNavigationBarItem(
-      activeIcon: Icon(icon, size: 24, color: CommonColors.primaryBlue),
-      icon: Icon(icon, size: 24, color: CommonColors.softBlue),
+      activeIcon: Icon(icon, size: 24, color: CommonColors.primaryRed),
+      icon: Icon(icon, size: 24, color: CommonColors.softRed),
       label: label,
     );
   }

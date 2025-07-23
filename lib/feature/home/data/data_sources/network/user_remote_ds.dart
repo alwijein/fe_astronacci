@@ -5,23 +5,25 @@ import 'package:fe_astronacci/common/utils/network/base_networking.dart';
 import 'package:fe_astronacci/feature/home/data/models/user_model/user_model.dart';
 
 abstract class IUserRemoteDataSource {
-  Future<List<UserModel>> fetchUsers({int page = 1});
+  Future<List<UserModel>> fetchUsers({int page = 1, String? search});
 }
 
 class UserRemoteDataSource implements IUserRemoteDataSource {
   @override
-  Future<List<UserModel>> fetchUsers({int page = 1}) async {
+  Future<List<UserModel>> fetchUsers({int page = 1, String? search}) async {
+    final queryParams = {
+      'page': search == null ? page : 1,
+      'per_page': 9,
+      if (search != null && search.isNotEmpty) 'search': search,
+    };
+
     final resp = await BaseNetworking.shared.get(
       partUrl: 'users',
-      queryParams: {
-        'page': page,
-        'per_page': 9,
-      },
+      queryParams: queryParams,
     );
 
-    Log.debug('fetchUsers called with page: $page');
-
-    Log.debug('fetchUsers response: ${resp.data['data']['data']}');
+    Log.debug('fetchUsers called with page: $page, search: $search');
+    Log.debug('fetchUsers called with page: ${resp.data['data']['data']}');
 
     final users = (resp.data['data']['data'] as List)
         .map((e) => UserModel.fromJson(e))

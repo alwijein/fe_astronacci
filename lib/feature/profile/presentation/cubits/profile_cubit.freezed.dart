@@ -54,7 +54,6 @@ extension ProfileStatePatterns on ProfileState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_LogoutSuccess value)? logoutSuccess,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -67,8 +66,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that);
       case _Error() when error != null:
         return error(_that);
-      case _LogoutSuccess() when logoutSuccess != null:
-        return logoutSuccess(_that);
       case _:
         return orElse();
     }
@@ -93,7 +90,6 @@ extension ProfileStatePatterns on ProfileState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_LogoutSuccess value) logoutSuccess,
   }) {
     final _that = this;
     switch (_that) {
@@ -105,8 +101,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that);
       case _Error():
         return error(_that);
-      case _LogoutSuccess():
-        return logoutSuccess(_that);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -130,7 +124,6 @@ extension ProfileStatePatterns on ProfileState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_LogoutSuccess value)? logoutSuccess,
   }) {
     final _that = this;
     switch (_that) {
@@ -142,8 +135,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that);
       case _Error() when error != null:
         return error(_that);
-      case _LogoutSuccess() when logoutSuccess != null:
-        return logoutSuccess(_that);
       case _:
         return null;
     }
@@ -167,7 +158,6 @@ extension ProfileStatePatterns on ProfileState {
     TResult Function()? loading,
     TResult Function(ProfileEntity user)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? logoutSuccess,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -180,8 +170,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that.user);
       case _Error() when error != null:
         return error(_that.message);
-      case _LogoutSuccess() when logoutSuccess != null:
-        return logoutSuccess();
       case _:
         return orElse();
     }
@@ -206,7 +194,6 @@ extension ProfileStatePatterns on ProfileState {
     required TResult Function() loading,
     required TResult Function(ProfileEntity user) loaded,
     required TResult Function(String message) error,
-    required TResult Function() logoutSuccess,
   }) {
     final _that = this;
     switch (_that) {
@@ -218,8 +205,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that.user);
       case _Error():
         return error(_that.message);
-      case _LogoutSuccess():
-        return logoutSuccess();
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -243,7 +228,6 @@ extension ProfileStatePatterns on ProfileState {
     TResult? Function()? loading,
     TResult? Function(ProfileEntity user)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? logoutSuccess,
   }) {
     final _that = this;
     switch (_that) {
@@ -255,8 +239,6 @@ extension ProfileStatePatterns on ProfileState {
         return loaded(_that.user);
       case _Error() when error != null:
         return error(_that.message);
-      case _LogoutSuccess() when logoutSuccess != null:
-        return logoutSuccess();
       case _:
         return null;
     }
@@ -424,26 +406,6 @@ class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
           : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-}
-
-/// @nodoc
-
-class _LogoutSuccess implements ProfileState {
-  const _LogoutSuccess();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LogoutSuccess);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'ProfileState.logoutSuccess()';
   }
 }
 

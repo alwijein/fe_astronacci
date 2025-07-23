@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:fe_astronacci/feature/login/domain/use_cases/login_usecase.dart';
+import 'package:fe_astronacci/feature/auth/domain/use_cases/login_use_case.dart';
 
 part 'login_state.dart';
 

@@ -29,7 +29,7 @@ class CircleAvatarWithActiveIndicator extends StatelessWidget {
               height: 16,
               width: 16,
               decoration: BoxDecoration(
-                color: CommonColors.primaryBlue,
+                color: CommonColors.primaryRed,
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: CommonColors.white,
